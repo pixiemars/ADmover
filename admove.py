@@ -7,10 +7,9 @@ def add_to_group(username, password, server, groupdn, cn):
     pyad.set_defaults(ldap_server=server,
                       username=username, password=password)
     group = pyad.from_dn(groupdn)
-    print group
     user = pyad.from_cn(cn)
-    print user
     group.add_members([user])
+    print "Moved " + user + "to " + group
 
 
 def search_and_move(attribute, value, dn, un, pw, server, groupdn, pagesize):
@@ -56,14 +55,16 @@ admove.add_param("attribute",
                  default="",
                  type=str)
 
-admove.add_param("value", help="Value of attribute you are searching eg: sales",
-                 default="", type=str)
+admove.add_param(
+    "value", help="Value of attribute you are searching eg: sales",
+    default="", type=str)
 
 admove.add_param("DN", help="Distinguished name you are searching",
                  default="", type=str)
 
-admove.add_param("PS", help="Page size, Default is 1000, increase at your leasure",
-                 default="1000", type=str)
+admove.add_param(
+    "PS", help="Page size, Default is 1000, increase at your leasure",
+    default="1000", type=str)
 
 if __name__ == "__main__":
     admove.run()
